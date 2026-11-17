@@ -25,6 +25,7 @@ services:
     networks:
       - pg-network
     volumes:
+      - pg-data:/var/lib/postgresql/data
       - ./docker/db:/docker-entrypoint-initdb.d
 
   php:
@@ -59,6 +60,9 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+    volumes:
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json:ro
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
